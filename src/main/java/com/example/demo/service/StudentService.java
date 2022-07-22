@@ -2,6 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.domain.Student;
 import com.example.demo.domain.StudentRepository;
+import com.example.demo.exceptions.BadRequestException;
+import com.example.demo.exceptions.NotFoundException;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +19,12 @@ public class StudentService {
         this.repository = repository;
     }
 
-    public Student createStudent(Student student){
-        return repository.save(student);
+    public Student createStudent(Student student) throws BadRequestException{
+        try{
+            return repository.save(student);
+        }catch (DataIntegrityViolationException e){
+            throw new BadRequestException();
+        }
     }
 
     public List<Student> getAllStudents(){
@@ -24,11 +32,11 @@ public class StudentService {
     }
 
     public Student getById(Long id){
-        return repository.getById(id);
+        return repository.findById(id).orElseThrow(NotFoundException::new);
     }
 
-    public boolean deleteStudent(Student student){
-        repository.delete(student);
-        return !repository.existsById(student.getId());
+    public boolean deleteStudent(Long id){
+        repository.deleteById(id);
+        return !repository.existsById(id);
     }
 }

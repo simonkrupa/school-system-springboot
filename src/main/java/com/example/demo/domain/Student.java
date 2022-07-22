@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.sun.istack.Nullable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @Entity
+@AllArgsConstructor
 public class Student {
 
     @Id
@@ -32,4 +34,6 @@ public class Student {
         this.degree = degree;
         this.email = email;
     }
+
+
 }

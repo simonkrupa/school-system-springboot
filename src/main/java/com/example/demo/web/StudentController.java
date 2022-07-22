@@ -2,8 +2,10 @@ package com.example.demo.web;
 
 import com.example.demo.domain.Student;
 import com.example.demo.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,37 +19,38 @@ public class StudentController {
 
     private  final StudentService studentService;
 
+    @Autowired
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Student> getAll(){
-        return studentService.getAllStudents();
+    public ResponseEntity<List<Student>> getAll() {
+        return new ResponseEntity<>(studentService.getAllStudents(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Student getById(@PathVariable("id") Long id){
-        return studentService.getById(id);
+    public ResponseEntity<Student> getById(@PathVariable("id") Long id){
+        return new ResponseEntity<>(this.studentService.getById(id), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{id}")
-    public void delete(@PathVariable("id") Long id, HttpServletResponse response) {
-        Student student = studentService.getById(id);
-        if(student == null){
-            response.setStatus(HttpStatus.NOT_FOUND.value());
-            return;
-        }
-        boolean success = studentService.deleteStudent(student);
-        if(!success){
-            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+        if(this.studentService.deleteStudent(id)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Student create(@RequestBody StudentDto body) {
-        Student student = new Student(body.getFirstName(), body.getLastName(), body.getProgramme(), body.getDegree(), body.getEmail());
-        return studentService.createStudent(student);
+    public ResponseEntity<Student> create(@RequestBody StudentDto body) {
+        return new ResponseEntity<>(studentService.createStudent(new Student(body.getFirstName(),
+                body.getLastName(),
+                body.getProgramme(),
+                body.getDegree(),
+                body.getEmail())),
+                HttpStatus.CREATED);
     }
 
 
