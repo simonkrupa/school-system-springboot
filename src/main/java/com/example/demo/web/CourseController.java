@@ -3,49 +3,48 @@ package com.example.demo.web;
 import com.example.demo.domain.Course;
 import com.example.demo.domain.Student;
 import com.example.demo.service.CourseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/course")
+@CrossOrigin
 public class CourseController {
 
     private final CourseService courseService;
 
+    @Autowired
     public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Course> getAll(){
-        return courseService.getAll();
+    public ResponseEntity<List<Course>> getAll(){
+        return new ResponseEntity<>(courseService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Course getById(@PathVariable("id") Long id){
-        return courseService.getById(id);
+    public ResponseEntity<Course> getById(@PathVariable("id") Long id){
+        return new ResponseEntity<>(courseService.getById(id), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{id}")
-    public void delete(@PathVariable("id") Long id, HttpServletResponse response){
-        Course course = courseService.getById(id);
-        if(course == null){
-            response.setStatus(HttpStatus.NOT_FOUND.value());
-            return;
-        }
-        boolean success = courseService.delete(course);
-        if(!success){
-            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
+        if(courseService.delete(id)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Course create(@RequestBody CourseDto body){
-        Course course = new Course(body.getName(), body.getTeacher());
-        return courseService.create(course);
+    public ResponseEntity<Course> create(@RequestBody CourseDto body){
+        return new ResponseEntity<>(courseService.create(new Course(body.getName(), body.getTeacher())), HttpStatus.CREATED);
     }
 }

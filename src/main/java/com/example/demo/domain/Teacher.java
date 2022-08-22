@@ -1,5 +1,9 @@
 package com.example.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +25,10 @@ public class Teacher {
     private String lastName;
     @Column(nullable = false, unique = true)
     private String email;
+
+    //TODO custom serializer
     @OneToMany(mappedBy = "teacher")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private List<Course> courses;
 
     public Teacher(String firstName, String lastName, String email, List<Course> courses) {
