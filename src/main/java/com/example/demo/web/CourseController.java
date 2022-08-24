@@ -45,6 +45,6 @@ public class CourseController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Course> create(@RequestBody CourseDto body){
-        return new ResponseEntity<>(courseService.create(new Course(body.getName(), body.getTeacher())), HttpStatus.CREATED);
+        return new ResponseEntity<>(courseService.create(new Course(body.getName(), body.getTeacher(), body.getStudents())), HttpStatus.CREATED);
     }
 }

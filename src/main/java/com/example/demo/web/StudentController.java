@@ -50,7 +50,8 @@ public class StudentController {
                 body.getLastName(),
                 body.getProgramme(),
                 body.getDegree(),
-                body.getEmail())),
+                body.getEmail(),
+                body.getCourses())),
                 HttpStatus.CREATED);
     }
 
