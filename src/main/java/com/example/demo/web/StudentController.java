@@ -1,6 +1,7 @@
 package com.example.demo.web;
 
 import com.example.demo.model.Student;
+import com.example.demo.model.dto.StudentDto;
 import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

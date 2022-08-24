@@ -1,4 +1,4 @@
-package com.example.demo.web;
+package com.example.demo.model.dto;
 
 import com.example.demo.model.Course;
 import com.example.demo.model.Degree;

@@ -4,7 +4,7 @@ import com.example.demo.model.Student;
 import com.example.demo.repositories.StudentRepository;
 import com.example.demo.exceptions.BadRequestException;
 import com.example.demo.exceptions.NotFoundException;
-import com.example.demo.web.StudentDto;
+import com.example.demo.model.dto.StudentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
