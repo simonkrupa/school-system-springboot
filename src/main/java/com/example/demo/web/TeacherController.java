@@ -1,5 +1,6 @@
 package com.example.demo.web;
 
+import com.example.demo.model.Student;
 import com.example.demo.model.Teacher;
 import com.example.demo.model.dto.TeacherDto;
 import com.example.demo.service.TeacherService;
@@ -45,5 +46,10 @@ public class TeacherController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Teacher> create(@RequestBody TeacherDto body){
         return new ResponseEntity<>(this.teacherService.createTeacher(new Teacher(body.getFirstName(), body.getLastName(), body.getEmail(), body.getCourses())), HttpStatus.CREATED);
+    }
+
+    @GetMapping(path = "/students/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Student>> getAllStudentsOfTeacher(@PathVariable("id") Long teacherId){
+        return new ResponseEntity<>(this.teacherService.getAllStudentsOfTeacher(teacherId), HttpStatus.OK);
     }
 }

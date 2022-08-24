@@ -3,5 +3,8 @@ package com.example.demo.model;
 public enum Degree {
     BC,
     ING,
-    PHD
+    PHD,
+    MGR,
+    JUDr,
+    MUDr
 }
