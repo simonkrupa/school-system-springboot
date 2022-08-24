@@ -1,7 +1,7 @@
 package com.example.demo.web;
 
-import com.example.demo.domain.Course;
-import com.example.demo.domain.Degree;
+import com.example.demo.model.Course;
+import com.example.demo.model.Degree;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,6 @@
 package com.example.demo.web;
 
-import com.example.demo.domain.Course;
-import com.example.demo.domain.Student;
+import com.example.demo.model.Course;
 import com.example.demo.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import javax.print.attribute.standard.Media;
 import java.util.List;
 
 @RestController

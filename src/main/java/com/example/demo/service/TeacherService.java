@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.Teacher;
+import com.example.demo.model.Teacher;
 import com.example.demo.exceptions.BadRequestException;
 import com.example.demo.repositories.TeacherRepository;
 import com.example.demo.exceptions.NotFoundException;

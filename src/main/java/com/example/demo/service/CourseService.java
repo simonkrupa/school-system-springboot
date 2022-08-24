@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.Course;
-import com.example.demo.domain.Student;
-import com.example.demo.domain.Teacher;
+import com.example.demo.model.Course;
+import com.example.demo.model.Student;
+import com.example.demo.model.Teacher;
 import com.example.demo.exceptions.BadRequestException;
 import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.repositories.CourseRepository;
