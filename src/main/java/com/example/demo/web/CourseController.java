@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.print.attribute.standard.Media;
 import java.util.List;
 
 @RestController
@@ -46,5 +47,10 @@ public class CourseController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Course> create(@RequestBody CourseDto body){
         return new ResponseEntity<>(courseService.create(new Course(body.getName(), body.getTeacher(), body.getStudents())), HttpStatus.CREATED);
+    }
+
+    @PostMapping(path = "/{courseid}/add/{teacherid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Course> addTeacherToCourse(@PathVariable("courseid") Long courseId, @PathVariable("teacherid") Long teacherId){
+        return new ResponseEntity<>(courseService.addTeacherToCourse(courseId, teacherId), HttpStatus.OK);
     }
 }
