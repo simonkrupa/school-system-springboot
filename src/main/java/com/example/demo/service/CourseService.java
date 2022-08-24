@@ -49,7 +49,7 @@ public class CourseService {
     public Course create(Course course){
         try{
             if (course.getTeacher() != null) {
-                if (!teacherRepository.existsById(course.getTeacher().getId())) {
+                if (course.getTeacher().getId()==null || !teacherRepository.existsById(course.getTeacher().getId())) {
                     Teacher t = teacherService.createTeacher(new Teacher(course.getTeacher().getFirstName(),
                             course.getTeacher().getLastName(),
                             course.getTeacher().getEmail(),
@@ -64,7 +64,7 @@ public class CourseService {
             if(course.getStudents() != null){
                 List<Student> tmpStudents = new ArrayList<>();
                 for (Student student: course.getStudents()) {
-                    if(!studentRepository.existsById(student.getId())){
+                    if(student.getId()==null || !studentRepository.existsById(student.getId())){
                         Student s = studentService.createStudent(new Student(
                                 student.getFirstName(),
                                 student.getLastName(),

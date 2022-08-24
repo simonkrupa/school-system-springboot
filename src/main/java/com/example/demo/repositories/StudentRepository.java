@@ -11,7 +11,8 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    @Query(value = "SELECT * FROM student WHERE id IN (SELECT student_id FROM course_students WHERE course_id IN (SELECT course.id FROM course WHERE teacher_id=:id))",
+    @Query(value = "SELECT * FROM student WHERE id IN (SELECT student_id FROM course_students" +
+            " WHERE course_id IN (SELECT course.id FROM course WHERE teacher_id=:id))",
             nativeQuery = true)
     List<Student> findAllStudentsOfTeacher(@Param("id") Long id);
 }
