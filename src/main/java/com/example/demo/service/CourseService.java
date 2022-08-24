@@ -93,5 +93,14 @@ public class CourseService {
         }
         throw new BadRequestException();
     }
+
+    public Course addStudentToCourse(Long courseId, Long studentId) {
+        if(studentRepository.existsById(studentId) && courseRepository.existsById(courseId)){
+            Course course = courseRepository.findById(courseId).get();
+            course.addStudent(studentRepository.findById(studentId).get());
+            return courseRepository.save(course);
+        }
+        throw new BadRequestException();
+    }
 }
 

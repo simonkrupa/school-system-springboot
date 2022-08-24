@@ -48,8 +48,13 @@ public class CourseController {
         return new ResponseEntity<>(courseService.create(new Course(body.getName(), body.getTeacher(), body.getStudents())), HttpStatus.CREATED);
     }
 
-    @PostMapping(path = "/{courseid}/add/{teacherid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/{courseid}/add/teacher/{teacherid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Course> addTeacherToCourse(@PathVariable("courseid") Long courseId, @PathVariable("teacherid") Long teacherId){
         return new ResponseEntity<>(courseService.addTeacherToCourse(courseId, teacherId), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/{courseid}/add/student/{studentid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Course> addStudentToCourse(@PathVariable("courseid") Long courseId, @PathVariable("studentid") Long studentId){
+        return new ResponseEntity<>(courseService.addStudentToCourse(courseId, studentId), HttpStatus.OK);
     }
 }
