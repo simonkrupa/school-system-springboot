@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.model.Student;
 import com.example.demo.model.Teacher;
 import com.example.demo.exceptions.BadRequestException;
+import com.example.demo.model.dto.TeacherDto;
 import com.example.demo.repositories.StudentRepository;
 import com.example.demo.repositories.TeacherRepository;
 import com.example.demo.exceptions.NotFoundException;
@@ -46,5 +47,26 @@ public class TeacherService {
 
     public List<Student> getAllStudentsOfTeacher(Long teacherId) {
         return studentRepository.findAllStudentsOfTeacher(teacherId);
+    }
+
+    public Teacher update(Long teacherId, TeacherDto body) {
+        if(teacherRepository.existsById(teacherId)){
+            Teacher teacher = teacherRepository.findById(teacherId).get();
+            try {
+                if (body.getFirstName() != null) {
+                    teacher.setFirstName(body.getFirstName());
+                }
+                if (body.getEmail() != null) {
+                    teacher.setEmail(body.getEmail());
+                }
+                if (body.getLastName() != null) {
+                    teacher.setLastName(body.getLastName());
+                }
+                return this.teacherRepository.save(teacher);
+            }catch (Exception e){
+                throw new BadRequestException();
+            }
+        }
+        throw new NotFoundException();
     }
 }

@@ -52,4 +52,9 @@ public class TeacherController {
     public ResponseEntity<List<Student>> getAllStudentsOfTeacher(@PathVariable("id") Long teacherId){
         return new ResponseEntity<>(this.teacherService.getAllStudentsOfTeacher(teacherId), HttpStatus.OK);
     }
+
+    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Teacher> update(@PathVariable("id") Long teacherId, @RequestBody TeacherDto body){
+        return new ResponseEntity<>(this.teacherService.update(teacherId, body), HttpStatus.OK);
+    }
 }
